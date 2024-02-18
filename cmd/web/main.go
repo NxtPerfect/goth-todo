@@ -6,7 +6,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"todo/cmd/web/templates"
 
+	"github.com/a-h/templ"
 	"github.com/joho/godotenv"
 )
 
@@ -14,11 +16,10 @@ type Task struct {
 	Id          int32
 	Title       string
 	Description string
+	// date_created string
+	// date_modified string
+	// date_due string
 }
-
-// date_created string
-// date_modified string
-// date_due string
 
 func main() {
 	godotenv.Load()
@@ -37,17 +38,23 @@ func main() {
 		tmpl.Execute(w, tasks)
 	}
 
-	h2 := func(w http.ResponseWriter, r *http.Request) {
-		title := r.PostFormValue("title")
-		description := r.PostFormValue("description")
-		htmlStr := fmt.Sprintf("<li><p>%d. %s</p><span>%s<span>", 3, title, description)
-		tmpl, _ := template.New("T").Parse(htmlStr)
-		tmpl.Execute(w, nil)
+	// h3 := func(w http.ResponseWriter, r *http.Request) {
+	// 	tmpl := template.Must(template.ParseFiles("cmd/web/templates/login.html"))
+	// 	tmpl.Execute(w, nil)
+	// }
+
+	h4 := func(w http.ResponseWriter, r *http.Request) {
+		username := r.PostFormValue("username")
+		password := r.PostFormValue("password")
+		// Check in database if exists and password is correct
+		fmt.Printf("%t, %t", username == "admin", password == "admin")
 	}
 
+  tmpl := templates.loginPage()
 	http.HandleFunc("/", h1)
-	http.HandleFunc("/add-task", h2)
-	// http.HandleFunc("/api/tasks/0/edit", h3)
+	http.Handle("/login", templ.Handler(tmpl))
+	http.HandleFunc("/api/login", h4)
+	// http.Handle("/api/tasks/0/edit", templ.Handler(login))
 
 	log.Fatal(http.ListenAndServe(os.Getenv("SERVER_PORT"), nil))
 }
