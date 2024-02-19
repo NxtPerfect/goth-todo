@@ -1,0 +1,84 @@
+package templates
+
+templ rawPage(title string) {
+  <!DOCTYPE html>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <html lang="en">
+
+  <head>
+    <title>{ title }</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  </head>
+
+  <body class="scroll-smooth">
+  <nav class="grid grid-cols-2 gap-0.5 justify-items-center content-center p-2 px-4">
+    <h1>Logo</h1>
+    <div class="flex gap-0.25">
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+      <a href="/tos">TOS</a>
+    </div>
+  </nav>
+  <main class="flex flex-column gap-0.5 justify-center content-center p-2">
+  { children... }
+  </main>
+  <footer>
+    Copyright (c) 2024 Aurora. All Rights Reserved.
+  </footer>
+  </body>
+
+  </html>
+}
+
+templ HomePage() {
+  @rawPage("Home") {
+    <li>
+      <form>
+        <input class="bg-teal-500 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
+        <input class="bg-teal-500 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
+        <input class="bg-teal-500 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
+      </form>
+    </li>
+  }
+}
+
+templ NotFoundPage() {
+  @rawPage("Not Found") {
+    <h1>Page not found</h1>
+    <a href="/" title="Return home"/>
+  }
+}
+
+templ LoginPage() {
+  @rawPage("Login") {
+    <form hx-post="/api/login" hx-swap="outerHTML" hx-target="body">
+      <label for="login">Username</label>
+      <input class="bg-teal-500 rounded-lg text-white" type="text" name="username" placeholder="username" required/>
+      <label for="password">Password</label>
+      <input class="bg-teal-500 rounded-lg text-white" type="password" name="password" placeholder="password" required/>
+      <button class="bg-teal-500 rounded-lg text-white" type="submit">Login</button>
+    </form>
+  }
+}
+
+templ RegisterPage() {
+  @rawPage("Register") {
+    <form hx-post="/api/register">
+      <label for="username">Username</label>
+      <input type="text" name="username" placeholder="username" required/>
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="email" required/>
+      <label for="password">Password</label>
+      <input type="password" name="password" placeholder="password" required/>
+      <label for="password">Confirm Password</label>
+      <input type="password" name="confirm password" placeholder="confirm password" required/>
+      <button type="submit">
+        <svg class="animate-spin h-5 w-5 mr-3 opacity-0" viewBox="0 0 24 24"/>
+        Register
+      </button>
+    </form>
+  }
+}
