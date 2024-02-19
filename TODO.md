@@ -1,5 +1,9 @@
 # Backend
+- [x] connect to database
 - [ ] get tasks from database
+    - [ ] currently errors
+    - [/] perhaps the "insert" file didn't get run?
+        there are no databases created
 - [ ] login user
 - [ ] signup user
 - [ ] editing task

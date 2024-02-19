@@ -1,3 +1,4 @@
 /build
 .env
-cmd/web/templates/*_templ.go
+app/web/templates/*_templ.go
+app/postgres.backup

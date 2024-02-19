@@ -11,13 +11,15 @@ import (
 
 func Connect() *sql.DB {
 	godotenv.Load()
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", "localhost", 5432, os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_DB"))
 
-	// unknown driver, postgres
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", "127.0.0.1", 5432, os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_DB"))
+
+	fmt.Printf(psqlInfo)
 	conn, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
+	conn.Ping()
 
 	return conn
 }

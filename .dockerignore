@@ -28,3 +28,5 @@ tmp
 
 # templ
 src/components/*.go
+postgres.backup
+postgres
