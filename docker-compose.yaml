@@ -7,7 +7,7 @@ services:
       - 5432:5432
     volumes:
       # - ./app/postgres:/var/lib/postgresql/data
-      - ./postgres:/docker-entrypoint-initdb.d
+      - ./app/postgres:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_USER=todo
       - POSTGRES_PASSWORD=todo

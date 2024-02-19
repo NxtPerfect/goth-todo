@@ -12,30 +12,33 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// Check in database if exists and password is correct
 	conn := database.Connect()
-	rows, err := conn.Query("SELECT title FROM tasks WHERE userId = (SELECT id FROM users WHERE email = $1);", "admin@admin.io")
+	rows, err := conn.Query("SELECT password FROM users WHERE username = $1;", username)
+	// rows, err := conn.Query("SELECT title FROM tasks WHERE userId = (SELECT id FROM users WHERE username = $1);", username)
 	if err != nil {
 		panic(err)
 	}
 
-	var title string
+	var real_pass string
 
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&title)
+		err := rows.Scan(&real_pass)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("\n", title)
+		fmt.Printf("\nDid passwords match? %t", password == real_pass)
+
+    if password == real_pass {
+      http.Redirect(w, r, "/", http.StatusSeeOther)
+      return
+    }
 	}
 	err = rows.Err()
 	if err != nil {
 		panic(err)
 	}
 
-	if username == "admin" && password == "admin" {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-	http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+  http.Error(w, "Invalid credentials", http.StatusUnauthorized)
   return
+
 }

@@ -6,8 +6,8 @@ CREATE TABLE users (
   id UUID PRIMARY KEY,
   username VARCHAR(32) NOT NULL,
   email VARCHAR(64) NOT NULL UNIQUE,
-  password VARCHAR(64) NOT NULL,
-)
+  password VARCHAR(64) NOT NULL
+);
 
 -- Table of tasks
 CREATE TABLE tasks (
@@ -18,8 +18,8 @@ CREATE TABLE tasks (
   description TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   last_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  due_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-)
+  due_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Populate sample user
 INSERT INTO users (
@@ -27,7 +27,7 @@ INSERT INTO users (
   username,
   email,
   password
-) VALUES ( uuid_generate_v4(), 'admin', 'admin@admin.io', 'admin' )
+) VALUES ( uuid_generate_v4(), 'admin', 'admin@admin.io', 'admin' );
 
 -- Populate sample task
 INSERT INTO tasks (
@@ -38,4 +38,4 @@ INSERT INTO tasks (
   created_at,
   last_modified,
   due_at
-) VALUES ( uuid_generate_v4(), (SELECT id FROM users WHERE username = 'admin'), 'Title', 'Description', NULL, NULL, NULL)
+) VALUES ( uuid_generate_v4(), (SELECT id FROM users WHERE username = 'admin'), 'Title', 'Description', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );

@@ -66,7 +66,7 @@ templ LoginPage() {
 
 templ RegisterPage() {
   @rawPage("Register") {
-    <form hx-post="/api/register">
+    <form hx-post="/api/register" hx-swap="outerHTML" hx-target="body">
       <label for="username">Username</label>
       <input type="text" name="username" placeholder="username" required/>
       <label for="email">Email</label>
