@@ -13,6 +13,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
   if password != confirm_password {
     http.Error(w, "Passwords don't match", http.StatusBadRequest)
+    return
   }
 
   // check if email is email, verify lengths > 0, verify alphanumeric
