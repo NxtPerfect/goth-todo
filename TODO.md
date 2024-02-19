@@ -5,9 +5,6 @@
 - [ ] editing task
 - [ ] completing task
 
-# Api
-- [ ] when clicked add +1
-
 # Frontend
 - [ ] home page
     - [ ] number of tasks
@@ -25,8 +22,9 @@
         - [ ] due date
         - [ ] created date
         - [ ] last modified
-- [ ] Login/Register page
-    - [ ] Login/Register form
+- [x] Login/Register page
+    - [x] Login/Register form
+    - [ ] tailwind styling
 - [ ] Profile page
     - [ ] Total tasks finished
     - [ ] total tasks started
