@@ -7,20 +7,12 @@ import (
 	"net/http"
 	"os"
 	"todo/app/web/api"
+	"todo/app/web/database"
 	"todo/app/web/templates"
 
 	"github.com/a-h/templ"
 	"github.com/joho/godotenv"
 )
-
-type Task struct {
-	Id                 int32
-	Title              string
-	Description        string
-	date_created       string
-	date_last_modified string
-	date_due           string
-}
 
 func readUsernameCookie(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -37,14 +29,13 @@ func readUsernameCookie(next http.Handler) http.Handler {
 func main() {
 	godotenv.Load()
 
-	// username := r.Cookie("username")
-
-	// home := templates.HomePage()
 	login := templates.LoginPage()
 	register := templates.RegisterPage()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		username, err := r.Cookie("username")
+		auth_token, err := r.Cookie("auth_token")
+		tasks, err := database.GetTasks(username.Value, auth_token.Value, database.Connect())
 		if err != nil {
 			fmt.Printf("%s \n", err)
 			templates.HomePage("").Render(r.Context(), w)

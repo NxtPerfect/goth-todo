@@ -1,5 +1,7 @@
 package templates
 
+import "todo/app/web/api"
+
 templ rawPage(title string, username string) {
   <!DOCTYPE html>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -38,15 +40,23 @@ templ rawPage(title string, username string) {
   </html>
 }
 
-templ HomePage(username string) {
+templ HomePage(username string, tasks []api.Task) {
   @rawPage("Home", username) {
+    <h1>Welcome, {username}!</h1>
+    <p>Here are your tasks for today:</p>
+    for _, item := range tasks {
     <li>
       <form>
+        {item.id}. Title: {item.title} Description: {item.description}
         <input class="dark:bg-indigo-600 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
         <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
         <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
       </form>
     </li>
+    }
+    if len(tasks) == 0 {
+      No tasks for today!
+    }
   }
 }
 

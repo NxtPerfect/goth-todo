@@ -16,6 +16,7 @@ CREATE TABLE tasks (
   FOREIGN KEY(userid) REFERENCES users (id),
   title VARCHAR(32) NOT NULL,
   description TEXT,
+  finished BOOLEAN,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   last_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   due_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -35,7 +36,8 @@ INSERT INTO tasks (
   userid,
   title,
   description,
+  finished,
   created_at,
   last_modified,
   due_at
-) VALUES ( uuid_generate_v4(), (SELECT id FROM users WHERE username = 'admin'), 'Title', 'Description', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
+) VALUES ( uuid_generate_v4(), (SELECT id FROM users WHERE email = 'admin@admin.io'), 'Title', 'Description', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );

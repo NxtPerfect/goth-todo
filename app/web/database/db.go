@@ -3,8 +3,10 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"os"
+	"todo/app/web/types"
+
+	_ "github.com/lib/pq"
 
 	"github.com/joho/godotenv"
 )
@@ -25,12 +27,40 @@ func Connect() *sql.DB {
 }
 
 // Returns all tasks for user
-func GetTasks(email string, conn *sql.DB) *sql.Rows {
-	rows, err := conn.Query("SELECT * FROM tasks WHERE userId = (SELECT id FROM users WHERE email = $1", email)
+func GetTasks(username string, authtoken string, conn *sql.DB) []types.Task {
+	rows, err := conn.Query("SELECT authtoken, id FROM users WHERE username = $1", username)
 	if err != nil {
 		panic(err)
 	}
-	return rows
+
+	var token string
+	var id string
+
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&token, &id)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("\nDid tokens match? %t\n", authtoken == token)
+
+		// If it's the password, setup auth token and send to user
+		if authtoken == token {
+			row, err := conn.Query("SELECT * FROM tasks WHERE id = $1;", id)
+			if err != nil {
+				panic(err)
+			}
+
+			var tasks []types.Task
+			// Since there can be only one record as email is unique
+			// we can call row.Next once and get id and username
+			row.Next()
+			row.Scan(&tasks)
+			return tasks
+		}
+	}
+
+	return
 }
 
 // Inserts new tasks for user

@@ -3,16 +3,12 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 	"todo/app/web/database"
 	"todo/internal"
-
-	"github.com/joho/godotenv"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	godotenv.Load()
 	email := r.PostFormValue("email")
 	password := r.PostFormValue("password")
 
@@ -48,7 +44,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			row.Next()
 			row.Scan(&userid, &username)
 			expiration := time.Now().Add(30 * 24 * time.Hour)
-			token, _ := internal.GenerateAuthToken(userid, os.Getenv("AUTH_TOKEN_SEED"))
+			token, _ := internal.GenerateAuthToken(userid)
 			cookie := http.Cookie{Name: "auth_token", Value: token, Expires: expiration, HttpOnly: true, SameSite: http.SameSiteLaxMode, Path: "/"}
 			http.SetCookie(w, &cookie)
 			cookie = http.Cookie{Name: "username", Value: username, Expires: expiration, SameSite: http.SameSiteLaxMode, Path: "/"}

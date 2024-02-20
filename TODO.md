@@ -13,6 +13,9 @@
     - [x] perhaps the "insert" file didn't get run?
         there are no databases created
     - [ ] return tasks for logged in user
+        currently figure out db.go
+        how to return tasks array
+        how to return empty array
 - [ ] signup user
 - [ ] editing task
 - [ ] completing task

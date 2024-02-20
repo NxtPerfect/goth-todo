@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-func GenerateAuthToken(userId string, seed string) (string, error) {
+func GenerateAuthToken(userId string) (string, error) {
 	h := sha256.New()
 
-	_, err := h.Write([]byte(userId + seed))
+	_, err := h.Write([]byte(userId))
 	if err != nil {
 		panic(err)
 	}
@@ -17,8 +17,8 @@ func GenerateAuthToken(userId string, seed string) (string, error) {
 	return hex.EncodeToString(h.Sum(nil)), nil
 }
 
-func ValidateAuthToken(userId string, authtoken string, seed string) bool {
-	validtoken, _ := GenerateAuthToken(userId, seed)
+func ValidateAuthToken(userId string, authtoken string) bool {
+	validtoken, _ := GenerateAuthToken(userId)
 	return validtoken == authtoken
 }
 
