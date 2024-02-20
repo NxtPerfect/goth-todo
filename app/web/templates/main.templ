@@ -1,6 +1,8 @@
 package templates
 
-import "todo/app/web/api"
+import (
+  "todo/app/web/types"
+)
 
 templ rawPage(title string, username string) {
   <!DOCTYPE html>
@@ -29,7 +31,7 @@ templ rawPage(title string, username string) {
         <a class="underline" href="/tos">TOS</a>
     </div>
   </nav>
-  <main class="flex flex-column gap-0.5 justify-center content-center p-2 py-5 text-black bg-zinc-100 dark:bg-emerald-950 dark:text-white h-full">
+  <main class="flex flex-col gap-0.5 justify-center content-center items-center p-2 py-5 text-black bg-zinc-100 dark:bg-emerald-950 dark:text-white h-full">
   { children... }
   </main>
   <footer class="bg-emerald-100 text-black dark:bg-sky-800 dark:text-white p-2 py-10">
@@ -40,22 +42,26 @@ templ rawPage(title string, username string) {
   </html>
 }
 
-templ HomePage(username string, tasks []api.Task) {
+templ HomePage(username string, tasks []types.Task) {
   @rawPage("Home", username) {
-    <h1>Welcome, {username}!</h1>
-    <p>Here are your tasks for today:</p>
-    for _, item := range tasks {
-    <li>
-      <form>
-        {item.id}. Title: {item.title} Description: {item.description}
-        <input class="dark:bg-indigo-600 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
-        <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
-        <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
-      </form>
-    </li>
+    if username == "" {
+      username = "guest"
     }
-    if len(tasks) == 0 {
-      No tasks for today!
+    <h1>Welcome, {username}!</h1>
+    <h2>Here are your tasks for today:</h2>
+    if len(tasks) > 0 {
+      for i, _ := range tasks {
+        <li>
+          <form>
+            <h3>{tasks[i].Id}. Title: {tasks[i].Title}</h3> <p>Description: {tasks[i].Description}</p>
+            <input class="dark:bg-indigo-600 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
+            <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
+            <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
+          </form>
+        </li>
+      }
+    } else {
+      <h3>No tasks for today!</h3>
     }
   }
 }

@@ -3,19 +3,11 @@
 - [x] login user
     - [x] search db for username + password
     - [x] come up with auth_token generation
-        sha256 user id with seed
-        encode into string
-        send to user as http-only cookie
-        on authentication encrypt user-id matching username
-        if not correct, error
 - [ ] get tasks from database
     - [x] currently errors
     - [x] perhaps the "insert" file didn't get run?
         there are no databases created
     - [ ] return tasks for logged in user
-        currently figure out db.go
-        how to return tasks array
-        how to return empty array
 - [ ] signup user
 - [ ] editing task
 - [ ] completing task
