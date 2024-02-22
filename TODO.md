@@ -10,6 +10,9 @@
     - [x] return tasks for logged in user
 - [x] signup user
 - [ ] On forms, add error messages
+    - [ ] Create types with error messages
+        in templ check if they're ""
+        if no then show error message
 - [ ] tasks
     - [ ] add new task
     - [ ] editing task

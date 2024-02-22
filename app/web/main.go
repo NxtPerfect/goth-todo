@@ -18,7 +18,7 @@ func main() {
 	godotenv.Load()
 
 	login := templates.LoginPage("")
-	register := templates.RegisterPage("")
+	register := templates.RegisterPage()
 	tos := templates.TosPage()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
