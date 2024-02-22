@@ -17,7 +17,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	rows, err := conn.Query("SELECT password FROM users WHERE email = $1;", email)
 
 	if err != nil {
-		panic(err)
+    panic(err)
 	}
 
 	var real_pass string
@@ -58,7 +58,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+	http.Error(w, "Invalid credentials, user doesn't exist.", http.StatusUnauthorized)
 	return
 
 }

@@ -20,6 +20,7 @@ func main() {
 	login := templates.LoginPage("")
 	register := templates.RegisterPage()
 	tos := templates.TosPage()
+  addForm := templates.AddForm()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		username, err := r.Cookie("username")
@@ -41,6 +42,7 @@ func main() {
 	http.Handle("/login", templ.Handler(login))
 	http.Handle("/register", templ.Handler(register))
 	http.Handle("/tos", templ.Handler(tos))
+	http.Handle("/add", templ.Handler(addForm))
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
 	http.HandleFunc("/api/logout", api.Logout)
