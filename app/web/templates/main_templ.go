@@ -63,7 +63,7 @@ func rawPage(title string, username string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a class=\"underline\" href=\"/api/logout\">Logout</a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -107,78 +107,79 @@ func HomePage(username string, tasks []types.Task) templ.Component {
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
 			if username == "" {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("username = \"guest\"")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1>Welcome, guest!</h1><h2><a href=\"/login\">Log in</a> to add tasks</h2>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
-				}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <h1>Welcome, ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(username)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 49, Col: 26}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("!</h1><h2>Here are your tasks for today:</h2>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if len(tasks) > 0 {
-				for i, _ := range tasks {
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li><form><h3>")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					var templ_7745c5c3_Var7 string
-					templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Id)
-					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 55, Col: 28}
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(". Title: ")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					var templ_7745c5c3_Var8 string
-					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Title)
-					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 55, Col: 53}
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3><p>Description: ")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					var templ_7745c5c3_Var9 string
-					templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Description)
-					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 55, Col: 97}
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><input class=\"dark:bg-indigo-600 rounded-lg\" type=\"checkbox\" name=\"complete\" hx-post=\"/api/tasks/complete\" hx-include=\"\"> <input class=\"dark:bg-indigo-600 rounded-lg\" type=\"button\" value=\"Remove\" hx-post=\"/api/tasks/remove\"> <input class=\"dark:bg-indigo-600 rounded-lg\" type=\"button\" value=\"Edit\" hx-post=\"/api/tasks/edit\"></form></li>")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
 				}
 			} else {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h3>No tasks for today!</h3>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1>Welcome, ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var6 string
+				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(username)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 51, Col: 28}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("!</h1><h2>Here are your tasks for today:</h2>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				if len(tasks) > 0 {
+					for i, _ := range tasks {
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li><form><h3>")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var7 string
+						templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Id)
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 57, Col: 30}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(". Title: ")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var8 string
+						templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Title)
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 57, Col: 55}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3><p>Description: ")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var9 string
+						templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Description)
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 57, Col: 99}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><input class=\"dark:bg-indigo-600 rounded-lg\" type=\"checkbox\" name=\"complete\" hx-post=\"/api/tasks/complete\" hx-include=\"\"> <input class=\"dark:bg-indigo-600 rounded-lg\" type=\"button\" value=\"Remove\" hx-post=\"/api/tasks/remove\"> <input class=\"dark:bg-indigo-600 rounded-lg\" type=\"button\" value=\"Edit\" hx-post=\"/api/tasks/edit\"></form></li>")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+					}
+				} else {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h3>No tasks for today!</h3>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
 				}
 			}
 			if !templ_7745c5c3_IsBuffer {
@@ -294,7 +295,7 @@ func RegisterPage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/api/register\" hx-swap=\"outerHTML\" hx-target=\"body\"><label class=\"text-black dark:text-white\" for=\"username\">Username</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"text\" name=\"username\" placeholder=\"username\" required> <label class=\"text-black dark:text-white\" for=\"email\">Email</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"email\" name=\"email\" placeholder=\"email\" required> <label class=\"text-black dark:text-white\" for=\"password\">Password</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"password\" name=\"password\" placeholder=\"password\" required> <label class=\"text-black dark:text-white\" for=\"password\">Confirm Password</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"password\" name=\"confirm_password\" placeholder=\"confirm password\" required> <label class=\"text-black dark:text-white\" for=\"accept_tos\">I agree to the <a href=\"/tos\">Terms and Conditions</a></label> <input class=\"dark:bg-indigo-600 text-white\" type=\"checkbox\" name=\"accept_tos\" required> <button type=\"submit\"><svg class=\"animate-spin h-5 w-5 mr-3 opacity-0\" viewBox=\"0 0 24 24\"></svg> Register</button></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form class=\"flex flex-col\" hx-post=\"/api/register\" hx-swap=\"outerHTML\" hx-target=\"body\"><label class=\"text-black dark:text-white\" for=\"username\">Username</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"text\" name=\"username\" placeholder=\"username\" required> <label class=\"text-black dark:text-white\" for=\"email\">Email</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"email\" name=\"email\" placeholder=\"email\" required> <label class=\"text-black dark:text-white\" for=\"password\">Password</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"password\" name=\"password\" placeholder=\"password\" required> <label class=\"text-black dark:text-white\" for=\"password\">Confirm Password</label> <input class=\"dark:bg-indigo-600 text-white\" type=\"password\" name=\"confirm_password\" placeholder=\"confirm password\" required><div class=\"flex flex-row\"><label class=\"text-black dark:text-white\" for=\"accept_tos\">I agree to the <a href=\"/tos\">Terms and Conditions</a></label> <input class=\"dark:bg-indigo-600 text-white\" type=\"checkbox\" name=\"accept_tos\" required></div><button type=\"submit\"><svg class=\"animate-spin h-5 w-5 mr-3 opacity-0\" viewBox=\"0 0 24 24\"></svg> Register</button></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -306,6 +307,84 @@ func RegisterPage() templ.Component {
 		templ_7745c5c3_Err = rawPage("Register", "").Render(templ.WithChildren(ctx, templ_7745c5c3_Var15), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		if !templ_7745c5c3_IsBuffer {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+		}
+		return templ_7745c5c3_Err
+	})
+}
+
+func TosPage() templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+		if !templ_7745c5c3_IsBuffer {
+			templ_7745c5c3_Buffer = templ.GetBuffer()
+			defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var16 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var16 == nil {
+			templ_7745c5c3_Var16 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var17 := templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+			if !templ_7745c5c3_IsBuffer {
+				templ_7745c5c3_Buffer = templ.GetBuffer()
+				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>we just huge gaming in this gamer game</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if !templ_7745c5c3_IsBuffer {
+				_, templ_7745c5c3_Err = io.Copy(templ_7745c5c3_W, templ_7745c5c3_Buffer)
+			}
+			return templ_7745c5c3_Err
+		})
+		templ_7745c5c3_Err = rawPage("Terms of Service", "").Render(templ.WithChildren(ctx, templ_7745c5c3_Var17), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if !templ_7745c5c3_IsBuffer {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+		}
+		return templ_7745c5c3_Err
+	})
+}
+
+func errorComponent(errorMsg string) templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+		if !templ_7745c5c3_IsBuffer {
+			templ_7745c5c3_Buffer = templ.GetBuffer()
+			defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var18 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var18 == nil {
+			templ_7745c5c3_Var18 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		if errorMsg != "" {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-red m-4\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var19 string
+			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(errorMsg)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 121, Col: 39}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		if !templ_7745c5c3_IsBuffer {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)

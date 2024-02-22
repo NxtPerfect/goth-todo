@@ -3,14 +3,17 @@
 - [x] login user
     - [x] search db for username + password
     - [x] come up with auth_token generation
-- [ ] get tasks from database
+- [x] get tasks from database
     - [x] currently errors
     - [x] perhaps the "insert" file didn't get run?
         there are no databases created
-    - [ ] return tasks for logged in user
-- [ ] signup user
-- [ ] editing task
-- [ ] completing task
+    - [x] return tasks for logged in user
+- [x] signup user
+- [ ] On forms, add error messages
+- [ ] tasks
+    - [ ] add new task
+    - [ ] editing task
+    - [ ] completing task
 
 # Frontend
 - [ ] home page

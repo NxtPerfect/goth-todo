@@ -27,6 +27,7 @@ templ rawPage(title string, username string) {
         <a class="underline" href="/register">Register</a>
       } else {
         <a class="underline" href="/profile">{ username }</a>
+        <a class="underline" href="/api/logout">Logout</a>
       }
         <a class="underline" href="/tos">TOS</a>
     </div>
@@ -45,23 +46,25 @@ templ rawPage(title string, username string) {
 templ HomePage(username string, tasks []types.Task) {
   @rawPage("Home", username) {
     if username == "" {
-      username = "guest"
-    }
-    <h1>Welcome, {username}!</h1>
-    <h2>Here are your tasks for today:</h2>
-    if len(tasks) > 0 {
-      for i, _ := range tasks {
-        <li>
-          <form>
-            <h3>{tasks[i].Id}. Title: {tasks[i].Title}</h3> <p>Description: {tasks[i].Description}</p>
-            <input class="dark:bg-indigo-600 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
-            <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
-            <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
-          </form>
-        </li>
-      }
+      <h1>Welcome, guest!</h1>
+      <h2><a href="/login">Log in</a> to add tasks</h2>
     } else {
-      <h3>No tasks for today!</h3>
+      <h1>Welcome, {username}!</h1>
+      <h2>Here are your tasks for today:</h2>
+      if len(tasks) > 0 {
+        for i, _ := range tasks {
+          <li>
+            <form>
+              <h3>{tasks[i].Id}. Title: {tasks[i].Title}</h3> <p>Description: {tasks[i].Description}</p>
+              <input class="dark:bg-indigo-600 rounded-lg" type="checkbox" name="complete" hx-post="/api/tasks/complete" hx-include="" />
+              <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Remove" hx-post="/api/tasks/remove" />
+              <input class="dark:bg-indigo-600 rounded-lg" type="button" value="Edit" hx-post="/api/tasks/edit" />
+            </form>
+          </li>
+        }
+      } else {
+        <h3>No tasks for today!</h3>
+      }
     }
   }
 }
@@ -73,7 +76,7 @@ templ NotFoundPage() {
   }
 }
 
-templ LoginPage() {
+templ LoginPage(errorMsg string) {
   @rawPage("Login", "") {
     <form hx-post="/api/login" hx-swap="outerHTML" hx-target="body">
       <label class="text-black dark:text-white text-black" for="email">Email</label>
@@ -81,13 +84,14 @@ templ LoginPage() {
       <label class="text-black dark:text-white text-black" for="password">Password</label>
       <input class="dark:bg-indigo-600 dark:text-white rounded-lg text-black" type="password" name="password" placeholder="Your password" required/>
       <button class="dark:bg-indigo-600 dark:text-white rounded-lg text-black" type="submit">Login</button>
+      @errorComponent(errorMsg)
     </form>
   }
 }
 
-templ RegisterPage() {
+templ RegisterPage(errorMsg string) {
   @rawPage("Register", "") {
-    <form hx-post="/api/register" hx-swap="outerHTML" hx-target="body">
+    <form class="flex flex-col" hx-post="/api/register" hx-swap="outerHTML" hx-target="body">
       <label class="text-black dark:text-white" for="username">Username</label>
       <input class="dark:bg-indigo-600 text-white" type="text" name="username" placeholder="username" required/>
       <label class="text-black dark:text-white" for="email">Email</label>
@@ -96,12 +100,27 @@ templ RegisterPage() {
       <input class="dark:bg-indigo-600 text-white" type="password" name="password" placeholder="password" required/>
       <label class="text-black dark:text-white" for="password">Confirm Password</label>
       <input class="dark:bg-indigo-600 text-white" type="password" name="confirm_password" placeholder="confirm password" required/>
-      <label class="text-black dark:text-white" for="accept_tos">I agree to the <a href="/tos">Terms and Conditions</a></label>
-      <input class="dark:bg-indigo-600 text-white" type="checkbox" name="accept_tos" required/>
+      <div class="flex flex-row">
+        <label class="text-black dark:text-white" for="accept_tos">I agree to the <a href="/tos">Terms and Conditions</a></label>
+        <input class="dark:bg-indigo-600 text-white" type="checkbox" name="accept_tos" required/>
+      </div>
       <button type="submit">
         <svg class="animate-spin h-5 w-5 mr-3 opacity-0" viewBox="0 0 24 24"/>
         Register
+      @errorComponent(errorMsg)
       </button>
     </form>
+  }
+}
+
+templ TosPage() {
+  @rawPage("Terms of Service", "") {
+    <p>we just huge gaming in this gamer game</p>
+  }
+}
+
+templ errorComponent(errorMsg string) {
+  if (errorMsg != "") {
+    <div class="text-red m-4">{errorMsg}</div>
   }
 }

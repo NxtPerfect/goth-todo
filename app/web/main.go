@@ -17,8 +17,9 @@ import (
 func main() {
 	godotenv.Load()
 
-	login := templates.LoginPage()
-	register := templates.RegisterPage()
+	login := templates.LoginPage("")
+	register := templates.RegisterPage("")
+	tos := templates.TosPage()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		username, err := r.Cookie("username")
@@ -31,15 +32,18 @@ func main() {
 		auth_token, err := r.Cookie("auth_token")
 		if err != nil || auth_token == nil {
 			fmt.Printf("No auth token for user")
-			panic(err)
+			templates.HomePage("", []types.Task{}).Render(r.Context(), w)
+			return
 		}
 		tasks := database.GetTasks(username.Value, auth_token.Value, database.Connect())
 		templates.HomePage(username.Value, tasks).Render(r.Context(), w)
 	})
 	http.Handle("/login", templ.Handler(login))
 	http.Handle("/register", templ.Handler(register))
+	http.Handle("/tos", templ.Handler(tos))
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
+	http.HandleFunc("/api/logout", api.Logout)
 
 	log.Fatal(http.ListenAndServe(os.Getenv("SERVER_PORT"), nil))
 }
