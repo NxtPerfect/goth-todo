@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"todo/app/web/database"
-	"todo/app/web/types"
+	"todo/app/web/templates"
 	"todo/internal"
 )
 
@@ -26,7 +26,7 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 
 	// Check in database if exists and password is correct
 	conn := database.Connect()
-	rows, err := conn.Query("SELECT id FROM users WHERE username = $1;", username)
+	rows, err := conn.Query("SELECT id FROM users WHERE username = $1;", username.Value)
 
 	if err != nil {
 		panic(err)
@@ -59,7 +59,7 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		http.Redirect(w, r, "/", http.StatusAccepted)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 	err = rows.Err()

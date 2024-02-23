@@ -138,7 +138,7 @@ templ errorComponent(errorMsg string) {
 }
 
 templ AddForm() {
-  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/add" hx-target="body" hx-swap="outerHTML">
+  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/add" hx-target="#tasks_list" hx-swap="beforeend">
     <label class="min-w-fit" for="title">Title:</label>
     <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="title" placeholder="Title"/>
     <label class="min-w-fit" for="description">Description:</label>

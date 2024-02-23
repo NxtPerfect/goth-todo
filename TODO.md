@@ -9,6 +9,17 @@
         there are no databases created
     - [x] return tasks for logged in user
 - [x] signup user
+- [ ] tasks part 1
+    - [x] add new task
+        - We do a lot of calls to verify in each function
+        should move it to internal file
+        and call it when needed
+        - generate auth token once
+        then save to users table
+        - however it returns all of the new html
+        while it should only return the new element
+        - on "add new task" button, we always return
+        new task form
 - [ ] On forms, add error messages
     - [ ] Create types with error messages
         in templ check if they're ""
@@ -18,13 +29,7 @@
         then they show up
         but then it also swaps that element
         for home page on success
-- [ ] tasks
-    - [ ] add new task
-        - We do a lot of calls to verify in each function
-        should move it to internal file
-        and call it when needed
-        - generate auth token once
-        then save to users table
+- [ ] tasks part 2
     - [ ] editing task
     - [ ] completing task
     - [ ] search task by name/descr
