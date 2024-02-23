@@ -20,7 +20,8 @@ func main() {
 	login := templates.LoginPage("")
 	register := templates.RegisterPage()
 	tos := templates.TosPage()
-	addForm := templates.AddForm()
+	// addForm := templates.AddForm()
+	showAddForm := false
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		username, err := r.Cookie("username")
@@ -42,11 +43,18 @@ func main() {
 	http.Handle("/login", templ.Handler(login))
 	http.Handle("/register", templ.Handler(register))
 	http.Handle("/tos", templ.Handler(tos))
-	http.Handle("/add", templ.Handler(addForm))
+	http.HandleFunc("/add", func(w http.ResponseWriter, r *http.Request) {
+		if !showAddForm {
+			form := templates.AddForm()
+			showAddForm = true
+			form.Render(r.Context(), w)
+		}
+		return
+	})
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
 	http.HandleFunc("/api/logout", api.Logout)
-  http.HandleFunc("/api/add", api.AddTask)
+	http.HandleFunc("/api/add", api.AddTask)
 
 	log.Fatal(http.ListenAndServe(os.Getenv("SERVER_PORT"), nil))
 }

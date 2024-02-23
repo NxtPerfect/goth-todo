@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"todo/app/web/database"
-	"todo/app/web/templates"
 	"todo/internal"
 )
 
@@ -52,7 +51,6 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Create new task, since the tokens matched
-		// TODO: NOT TESTED
 		_, err = conn.Query("INSERT INTO tasks (id, userid, title, description, finished, created_at, last_modified, due_at) VALUES (uuid_generate_v4(), $1, $2, $3, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $4);", real_id, title, description, date_due)
 		if err != nil {
 			http.Error(w, "Couldn't create task.", http.StatusInternalServerError)
@@ -67,7 +65,7 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	http.Error(w, "Invalid credentials. User doesn't exist.", http.StatusUnauthorized)
+	http.Error(w, "Invalid credentials. User doesn't exist. From error message", http.StatusUnauthorized)
 	return
 
 }

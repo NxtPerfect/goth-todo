@@ -1,0 +1,14 @@
+package templates
+
+templ LoginPage(errorMsg string) {
+  @rawPage("Login", "") {
+    <form class="flex flex-col gap-4" hx-post="/api/login" hx-target="#error-msg" hx-swap="innerHTML" hx-ext="response-targets" hx-target-error="#error-msg" hx-target-4*="#error-msg">
+      <label class="text-black dark:text-white text-black" for="email">Email</label>
+      <input class="dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1" type="email" name="email" placeholder="Your email address" required/>
+      <label class="text-black dark:text-white text-black" for="password">Password</label>
+      <input class="dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1" type="password" name="password" placeholder="Your password" required/>
+      <button class="dark:bg-indigo-600 dark:text-white rounded-lg text-black" type="submit">Login</button>
+      <div id="error-msg" class="bg-red-500"></div>
+    </form>
+  }
+}

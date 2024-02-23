@@ -11,15 +11,15 @@
 - [x] signup user
 - [ ] tasks part 1
     - [x] add new task
-        - We do a lot of calls to verify in each function
+        - [x] on "add new task" button, we always return
+        new task form
+        - [ ] We do a lot of calls to verify in each function
         should move it to internal file
         and call it when needed
-        - generate auth token once
+        generate auth token once
         then save to users table
         - however it returns all of the new html
         while it should only return the new element
-        - on "add new task" button, we always return
-        new task form
 - [ ] On forms, add error messages
     - [ ] Create types with error messages
         in templ check if they're ""

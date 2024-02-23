@@ -1,0 +1,44 @@
+package templates
+
+import (
+  "todo/app/web/types"
+  "strconv"
+)
+
+templ HomePage(username string, tasks []types.Task) {
+  @rawPage("Home", username) {
+    if username == "" {
+      <h1>Welcome, guest!</h1>
+      <h2><p hx-post="/login" hx-swap="outerHTML" hx-target="body">Log in</p> to add tasks</h2>
+    } else {
+      <h1 class="text-xl font-semibold">Welcome, {username}!</h1>
+      <h2 class="text-lg">Here are your tasks for today:</h2>
+      <div class="dark:bg-indigo-950 border-indigo-600 border-solid border-2 p-2 rounded-lg max-w-4xl w-full">
+      <div class="flex flex-row justify-between align-center max-w-4xl w-full">Total: { strconv.Itoa(len(tasks)) }
+        <button hx-get="/add" hx-target="#tasks_list" hx-swap="beforebegin" class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button">Add new task</button>
+      </div>
+      if len(tasks) > 0 {
+        <ul class="max-w-4xl w-full" id="tasks_list">
+        for i, _ := range tasks {
+          <li class="my-2" id={"task_" + strconv.Itoa(i)}>
+            <form class="flex flex-row dark:border-green-600 border-solid border-2 p-2 rounded-lg">
+              <div class="flex flex-col basis-3/4">
+                <h3 class="text-lg">Title: {tasks[i].Title}</h3>
+                <p class="font-light">Description: {tasks[i].Description}</p>
+              </div>
+              <div class="flex flex-row basis-1/4 justify-evenly items-center">
+                <input class="dark:bg-indigo-600 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-post="/api/tasks/complete" />
+                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button" value="Edit" hx-post="/api/tasks/edit" />
+                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-500 hover:cursor-pointer active:bg-red-700 max-h-8 h-full" type="button" value="Remove" hx-post="/api/tasks/remove" />
+              </div>
+            </form>
+          </li>
+        }
+        </ul>
+      } else {
+        <h3>No tasks for today!</h3>
+      }
+      </div>
+    }
+  }
+}

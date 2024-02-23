@@ -1,0 +1,24 @@
+package templates
+
+templ RegisterPage() {
+  @rawPage("Register", "") {
+    <form class="flex flex-col" hx-post="/api/register" hx-swap="outerHTML" hx-target="body">
+      <label class="text-black dark:text-white" for="username">Username</label>
+      <input class="dark:bg-indigo-600 text-white" type="text" name="username" placeholder="username" required/>
+      <label class="text-black dark:text-white" for="email">Email</label>
+      <input class="dark:bg-indigo-600 text-white" type="email" name="email" placeholder="email" required/>
+      <label class="text-black dark:text-white" for="password">Password</label>
+      <input class="dark:bg-indigo-600 text-white" type="password" name="password" placeholder="password" required/>
+      <label class="text-black dark:text-white" for="password">Confirm Password</label>
+      <input class="dark:bg-indigo-600 text-white" type="password" name="confirm_password" placeholder="confirm password" required/>
+      <div class="flex flex-row">
+        <label class="text-black dark:text-white" for="accept_tos">I agree to the <a href="/tos">Terms and Conditions</a></label>
+        <input class="dark:bg-indigo-600 text-white" type="checkbox" name="accept_tos" required/>
+      </div>
+      <button type="submit">
+        <svg class="animate-spin h-5 w-5 mr-3 opacity-0" viewBox="0 0 24 24"/>
+        Register
+      </button>
+    </form>
+  }
+}
