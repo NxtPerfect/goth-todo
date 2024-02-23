@@ -58,7 +58,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	http.Error(w, "Invalid credentials, user doesn't exist.", http.StatusUnauthorized)
+	http.Error(w, "Invalid credentials. User doesn't exist." , http.StatusUnauthorized)
 	return
 
 }

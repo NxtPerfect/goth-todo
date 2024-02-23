@@ -16,3 +16,7 @@ type User struct {
 	Email    string
 	Password string
 }
+
+type ErrorMessage struct {
+	message string
+}

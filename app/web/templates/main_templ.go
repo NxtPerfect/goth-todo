@@ -12,6 +12,7 @@ import "bytes"
 
 import (
 	"strconv"
+	"time"
 	"todo/app/web/types"
 )
 
@@ -35,7 +36,7 @@ func rawPage(title string, username string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 15, Col: 18}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 16, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -58,7 +59,7 @@ func rawPage(title string, username string) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(username)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 30, Col: 171}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 31, Col: 171}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -120,7 +121,7 @@ func HomePage(username string, tasks []types.Task) templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(username)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 53, Col: 58}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 54, Col: 58}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -133,13 +134,13 @@ func HomePage(username string, tasks []types.Task) templ.Component {
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(len(tasks)))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 55, Col: 112}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 56, Col: 112}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button hx-get=\"/add\" hx-target=\"#tasks_list\" hx-swap=\"beforebegin\" class=\"dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full\" type=\"button\">Add new task</button></div>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <button hx-get=\"/add\" hx-target=\"#tasks_list\" hx-swap=\"beforebegin\" class=\"dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full\" type=\"button\">Add new task</button></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -164,7 +165,7 @@ func HomePage(username string, tasks []types.Task) templ.Component {
 						var templ_7745c5c3_Var8 string
 						templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Title)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 62, Col: 58}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 65, Col: 58}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 						if templ_7745c5c3_Err != nil {
@@ -177,7 +178,7 @@ func HomePage(username string, tasks []types.Task) templ.Component {
 						var templ_7745c5c3_Var9 string
 						templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(tasks[i].Description)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 63, Col: 72}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 66, Col: 72}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 						if templ_7745c5c3_Err != nil {
@@ -273,7 +274,7 @@ func LoginPage(errorMsg string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form class=\"flex flex-col gap-4\" hx-post=\"/api/login\" hx-target=\"body\" hx-swap=\"outerHTML swap:0.1s\" hx-ext=\"response-targets\" hx-target-error=\"#error-msg\" hx-target-4*=\"#error-msg\"><label class=\"text-black dark:text-white text-black\" for=\"email\">Email</label> <input class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1\" type=\"email\" name=\"email\" placeholder=\"Your email address\" required> <label class=\"text-black dark:text-white text-black\" for=\"password\">Password</label> <input class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1\" type=\"password\" name=\"password\" placeholder=\"Your password\" required> <button class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black\" type=\"submit\">Login</button><div id=\"error-msg\" class=\"min-w-100 min-h-50 w-50 h-25 bg-red-500\" hx-swap-oob=\"true\">Test</div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form class=\"flex flex-col gap-4\" hx-post=\"/api/login\" hx-target=\"body\" hx-swap=\"outerHTML swap:0.1s\" hx-ext=\"response-targets\" hx-target-error=\"#error-msg\" hx-target-4*=\"#error-msg\"><label class=\"text-black dark:text-white text-black\" for=\"email\">Email</label> <input class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1\" type=\"email\" name=\"email\" placeholder=\"Your email address\" required> <label class=\"text-black dark:text-white text-black\" for=\"password\">Password</label> <input class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1\" type=\"password\" name=\"password\" placeholder=\"Your password\" required> <button class=\"dark:bg-indigo-600 dark:text-white rounded-lg text-black\" type=\"submit\">Login</button><div id=\"error-msg\" class=\"min-w-100 min-h-50 w-50 h-25 bg-red-500\">Test</div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -392,7 +393,7 @@ func errorComponent(errorMsg string) templ.Component {
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(errorMsg)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 132, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `main.templ`, Line: 135, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -423,7 +424,23 @@ func AddForm() templ.Component {
 			templ_7745c5c3_Var20 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/api/add\"><label for=\"title\">Title:</label> <input type=\"text\" name=\"title\" placeholder=\"Title\"> <label for=\"description\">Description:</label> <input type=\"text\" name=\"description\" placeholder=\"Description\"> <label for=\"date_due\">Date due:</label> <input type=\"text\" name=\"date_due\"> <input type=\"submit\" value=\"Add\"></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form class=\"flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4\" hx-post=\"/api/add\" hx-target=\"body\" hx-swap=\"outerHTML\"><label class=\"min-w-fit\" for=\"title\">Title:</label> <input class=\"dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6\" type=\"text\" name=\"title\" placeholder=\"Title\"> <label class=\"min-w-fit\" for=\"description\">Description:</label> <input class=\"dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6\" type=\"text\" name=\"description\" placeholder=\"Description\"> <label class=\"min-w-fit\" for=\"date_due\">Date due:</label> <input class=\"dark:text-white dark:bg-sky-800 hover:cursor-pointer min-w-fit py-2 px-2 max-h-6 rounded-lg text-center align-middle\" type=\"date\" min=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(time.Now().Format("2006-01-02")))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(time.Now().Format("2006-01-02")))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"date_due\"> <button class=\"dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-14 w-full\" type=\"submit\">Add</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -3,6 +3,7 @@ package templates
 import (
   "todo/app/web/types"
   "strconv"
+  "time"
 )
 
 templ rawPage(title string, username string) {
@@ -53,7 +54,9 @@ templ HomePage(username string, tasks []types.Task) {
     } else {
       <h1 class="text-xl font-semibold">Welcome, {username}!</h1>
       <h2 class="text-lg">Here are your tasks for today:</h2>
-      <div class="flex flex-row justify-between align-center max-w-4xl w-full">Total: { strconv.Itoa(len(tasks)) }<button hx-get="/add" hx-target="#tasks_list" hx-swap="beforebegin" class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button">Add new task</button></div>
+      <div class="flex flex-row justify-between align-center max-w-4xl w-full">Total: { strconv.Itoa(len(tasks)) }
+        <button hx-get="/add" hx-target="#tasks_list" hx-swap="beforebegin" class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button">Add new task</button>
+      </div>
       if len(tasks) > 0 {
         <ul class="max-w-4xl w-full" id="tasks_list">
         for i, _ := range tasks {
@@ -94,7 +97,7 @@ templ LoginPage(errorMsg string) {
       <label class="text-black dark:text-white text-black" for="password">Password</label>
       <input class="dark:bg-indigo-600 dark:text-white rounded-lg text-black px-2 py-1" type="password" name="password" placeholder="Your password" required/>
       <button class="dark:bg-indigo-600 dark:text-white rounded-lg text-black" type="submit">Login</button>
-      <div id="error-msg" class="min-w-100 min-h-50 w-50 h-25 bg-red-500" hx-swap-oob="true">Test</div>
+      <div id="error-msg" class="min-w-100 min-h-50 w-50 h-25 bg-red-500">Test</div>
     </form>
   }
 }
@@ -135,13 +138,13 @@ templ errorComponent(errorMsg string) {
 }
 
 templ AddForm() {
-  <form hx-post="/api/add">
-    <label for="title">Title:</label>
-    <input type="text" name="title" placeholder="Title"/>
-    <label for="description">Description:</label>
-    <input type="text" name="description" placeholder="Description"/>
-    <label for="date_due">Date due:</label>
-    <input type="text" name="date_due"/>
-    <input type="submit" value="Add"/>
+  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/add" hx-target="body" hx-swap="outerHTML">
+    <label class="min-w-fit" for="title">Title:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="title" placeholder="Title"/>
+    <label class="min-w-fit" for="description">Description:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="description" placeholder="Description"/>
+    <label class="min-w-fit" for="date_due">Date due:</label>
+    <input class="dark:text-white dark:bg-sky-800 hover:cursor-pointer min-w-fit py-2 px-2 max-h-6 rounded-lg text-center align-middle" type="date" min={time.Now().Format("2006-01-02")} value={time.Now().Format("2006-01-02")} name="date_due"/>
+    <button class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-14 w-full" type="submit" >Add</button>
   </form>
 }

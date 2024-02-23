@@ -13,10 +13,21 @@
     - [ ] Create types with error messages
         in templ check if they're ""
         if no then show error message
+
+        when i change target to error message
+        then they show up
+        but then it also swaps that element
+        for home page on success
 - [ ] tasks
     - [ ] add new task
+        - We do a lot of calls to verify in each function
+        should move it to internal file
+        and call it when needed
+        - generate auth token once
+        then save to users table
     - [ ] editing task
     - [ ] completing task
+    - [ ] search task by name/descr
 
 # Frontend
 - [ ] home page
@@ -42,3 +53,8 @@
     - [ ] Total tasks finished
     - [ ] total tasks started
         - [ ] show as nice circle graph
+
+
+# Optimizations
+- [ ] switch to fasthttp
+- [ ] use echo/air
