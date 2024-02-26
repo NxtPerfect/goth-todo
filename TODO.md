@@ -21,14 +21,9 @@
         - however it returns all of the new html
         while it should only return the new element
 - [x] On forms, add error messages
-- [ ] tasks part 2
-    - [/] editing task
-        shows proper form
-        on saving of edit form
-        sends post to wrong path
-        change paths so they're correct
-        /task/edit for form
-        /api/task/edit for changing task in db
+- [/] tasks part 2
+    - [x] editing task
+        - [ ] ability to cancel editing
     - [ ] completing task
     - [ ] search task by name/descr
 

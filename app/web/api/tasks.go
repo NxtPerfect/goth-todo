@@ -73,21 +73,51 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Render task edit form
+func EditTaskForm(w http.ResponseWriter, r *http.Request) {
+	task_id := r.URL.Query().Get("id")
+	title := r.URL.Query().Get("title")
+	description := r.URL.Query().Get("description")
+	date_due := r.URL.Query().Get("date_due")
+	date_created := r.URL.Query().Get("date_created")
+
+	// fmt.Printf("%s", time.Parse("2006-02-01:T15:04:05.999999999Z07:00", date_due)
+	n_date_due, err := time.Parse(time.RFC3339Nano, date_due)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s", time.Now().String())
+	templates.EditForm(types.Task{Id: task_id, Title: title, Description: description, Finished: false, Date_created: date_created, Date_modified: time.Now().Format("2016-01-02"), Date_due: n_date_due.Format("2006-01-02")}).Render(r.Context(), w)
+}
+
+// Changes task in database
+// assumes user got correct tasks
 func EditTask(w http.ResponseWriter, r *http.Request) {
-  task_id := r.URL.Query().Get("id")
-  title := r.URL.Query().Get("title")
-  description := r.URL.Query().Get("description")
-  date_due := r.URL.Query().Get("date_due")
-  date_created := r.URL.Query().Get("date_created")
-  // fmt.Printf("%s", time.Parse("2006-02-01:T15:04:05.999999999Z07:00", date_due)
-  n_date_due, err := time.Parse(time.RFC3339Nano, date_due)
-  if err != nil {
-    panic(err)
-  }
-  fmt.Printf("%s", time.Now().String())
-  templates.EditForm(types.Task{Id: task_id, Title: title, Description: description, Finished: false, Date_created: date_created, Date_modified: time.Now().Format("2016-01-02"), Date_due: n_date_due.Format("2006-01-02")}).Render(r.Context(), w)
+	id := r.PostFormValue("id")
+	title := r.PostFormValue("title")
+	description := r.PostFormValue("description")
+	date_due := r.PostFormValue("date_due")
+	finished := false
+	date_modified := time.Now().Format("2006-01-02")
+
+	// Query database to edit
+	conn := database.Connect()
+	_, err := conn.Query("UPDATE tasks SET id = $6, title = $1, description = $2, finished = $3, created_at = (SELECT created_at FROM tasks WHERE id = $6), last_modified = $4, due_at = $5 WHERE id = $6;", title, description, finished, date_modified, date_due, id)
+
+	if err != nil {
+		w.Header().Add("HX-Retarget", "closest li")
+		w.Header().Add("HX-Reswap", "beforeend")
+		templates.ErrorMessage("Invalid task edited.").Render(r.Context(), w)
+		http.Error(w, "Bad edit request", http.StatusBadRequest)
+		panic(err)
+	}
+
+	// Should return newly created task
+	http.Redirect(w, r, "/", http.StatusOK)
+	return
+
 }
 
 func RemoveTask(w http.ResponseWriter, r *http.Request) {
-  // task_id := r.PostFormValue("id")
+	// task_id := r.PostFormValue("id")
 }

@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
-	"time"
+	// "strconv"
+	// "time"
 	"todo/app/web/api"
 	"todo/app/web/database"
 	"todo/app/web/templates"
@@ -22,7 +22,7 @@ func main() {
 	login := templates.LoginPage()
 	register := templates.RegisterPage()
 	tos := templates.TosPage()
-  notFound := templates.NotFoundPage()
+	notFound := templates.NotFoundPage()
 	showAddForm := false
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -53,34 +53,14 @@ func main() {
 		}
 		return
 	})
-  http.HandleFunc("/tasks/edit", func (w http.ResponseWriter, r *http.Request)  {
-    id := r.Form.Get("id")
-    title := r.Form.Get("title")
-    description := r.Form.Get("description")
-    finished := r.Form.Get("finished")
-    date_due := r.Form.Get("date_due")
-    date_created := r.Form.Get("date_created")
-    var task types.Task
-    task.Id = id
-    task.Title = title
-    task.Description = description
-    var err error
-    task.Finished, err = strconv.ParseBool(finished)
-    if err != nil {
-      panic(err)
-    }
-    task.Date_due = date_due
-    task.Date_created = date_created
-    task.Date_modified = time.Now().Format("2006-01-02")
-    templates.EditForm(task).Render(r.Context(), w)
-  })
+	http.HandleFunc("/tasks/edit", api.EditTaskForm)
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
 	http.HandleFunc("/api/logout", api.Logout)
 	http.HandleFunc("/api/add", api.AddTask)
 	http.HandleFunc("/api/tasks/edit", api.EditTask)
 	http.HandleFunc("/api/tasks/remove", api.RemoveTask)
-  http.Handle("/*", templ.Handler(notFound))
+	http.Handle("/*", templ.Handler(notFound))
 
 	log.Fatal(http.ListenAndServe(os.Getenv("SERVER_PORT"), nil))
 }
