@@ -3,7 +3,10 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"time"
 	"todo/app/web/database"
+	"todo/app/web/templates"
+	"todo/app/web/types"
 	"todo/internal"
 )
 
@@ -68,4 +71,23 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Invalid credentials. User doesn't exist. From error message", http.StatusUnauthorized)
 	return
 
+}
+
+func EditTask(w http.ResponseWriter, r *http.Request) {
+  task_id := r.URL.Query().Get("id")
+  title := r.URL.Query().Get("title")
+  description := r.URL.Query().Get("description")
+  date_due := r.URL.Query().Get("date_due")
+  date_created := r.URL.Query().Get("date_created")
+  // fmt.Printf("%s", time.Parse("2006-02-01:T15:04:05.999999999Z07:00", date_due)
+  n_date_due, err := time.Parse(time.RFC3339Nano, date_due)
+  if err != nil {
+    panic(err)
+  }
+  fmt.Printf("%s", time.Now().String())
+  templates.EditForm(types.Task{Id: task_id, Title: title, Description: description, Finished: false, Date_created: date_created, Date_modified: time.Now().Format("2016-01-02"), Date_due: n_date_due.Format("2006-01-02")}).Render(r.Context(), w)
+}
+
+func RemoveTask(w http.ResponseWriter, r *http.Request) {
+  // task_id := r.PostFormValue("id")
 }

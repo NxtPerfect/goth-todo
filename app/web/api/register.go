@@ -24,14 +24,16 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err == emailx.ErrInvalidFormat {
 			http.Error(w, "Invalid email format.", http.StatusBadRequest)
+      return
 		}
 		if err == emailx.ErrUnresolvableHost {
 			http.Error(w, "Unresolvable email host.", http.StatusBadRequest)
+      return
 		}
 		panic(err)
 	}
 
-	// TODO: check if email is email, verify lengths > 0, verify alphanumeric
+	// TODO: verify lengths > 0, verify alphanumeric
 	// then insert into database
 	// TODO: hash password
 	conn := database.Connect()

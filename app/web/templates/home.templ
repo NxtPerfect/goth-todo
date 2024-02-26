@@ -27,9 +27,10 @@ templ HomePage(username string, tasks []types.Task) {
                 <p class="font-light">Description: {tasks[i].Description}</p>
               </div>
               <div class="flex flex-row basis-1/4 justify-evenly items-center">
-                <input class="dark:bg-indigo-600 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-post="/api/tasks/complete" />
-                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button" value="Edit" hx-post="/api/tasks/edit" />
-                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-500 hover:cursor-pointer active:bg-red-700 max-h-8 h-full" type="button" value="Remove" hx-post="/api/tasks/remove" />
+                <input class="dark:bg-indigo-600 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + strconv.Itoa(i)} />
+                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button" value="Edit" hx-get="/tasks/edit" hx-target="closest form" hx-swap="innerHTML"/>
+                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button" value="Edit" hx-get={"/api/tasks/edit?id=" + strconv.Itoa(i) + "&title=" + tasks[i].Title + "&description=" + tasks[i].Description + "&date_created=" + tasks[i].Date_created + "&date_due=" + tasks[i].Date_due} hx-target="closest form" hx-swap="innerHTML"/>
+                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-500 hover:cursor-pointer active:bg-red-700 max-h-8 h-full" type="button" value="Remove" hx-post={"/api/tasks/remove?id=" + strconv.Itoa(i)} />
               </div>
             </form>
           </li>

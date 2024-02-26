@@ -1,0 +1,30 @@
+package templates
+
+import (
+  "time"
+  "todo/app/web/types"
+)
+
+templ AddForm() {
+  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/add" hx-target="body" hx-swap="outerHTML">
+    <label class="min-w-fit" for="title">Title:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="title" placeholder="Title"/>
+    <label class="min-w-fit" for="description">Description:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="description" placeholder="Description"/>
+    <label class="min-w-fit" for="date_due">Date due:</label>
+    <input class="dark:text-white dark:bg-sky-800 hover:cursor-pointer min-w-fit py-2 px-2 max-h-6 rounded-lg text-center align-middle" type="date" min={time.Now().Format("2006-01-02")} value={time.Now().Format("2006-01-02")} name="date_due"/>
+    <button class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-14 w-full" type="submit">Add</button>
+  </form>
+}
+
+templ EditForm(task types.Task) {
+  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/tasks/edit" hx-target="body" hx-swap="outerHTML">
+    <label class="min-w-fit" for="title">Title:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="title" placeholder="Title" value={task.Title}/>
+    <label class="min-w-fit" for="description">Description:</label>
+    <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="description" placeholder="Description" value={task.Description}/>
+    <label class="min-w-fit" for="date_due">Date due:</label>
+    <input class="dark:text-white dark:bg-sky-800 hover:cursor-pointer min-w-fit py-2 px-2 max-h-6 rounded-lg text-center align-middle" type="date" min={time.Now().Format("2006-01-02")} value={task.Date_due} name="date_due"/>
+    <button class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-14 w-full" type="submit">Edit</button>
+  </form>
+}

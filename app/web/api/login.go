@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"todo/app/web/database"
+	"todo/app/web/templates"
 	"todo/internal"
 )
 
@@ -48,8 +49,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			cookie := http.Cookie{Name: "auth_token", Value: token, Expires: expiration, HttpOnly: true, SameSite: http.SameSiteLaxMode, Path: "/"}
 			http.SetCookie(w, &cookie)
 			cookie = http.Cookie{Name: "username", Value: username, Expires: expiration, SameSite: http.SameSiteLaxMode, Path: "/"}
-			http.SetCookie(w, &cookie)
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+      http.SetCookie(w, &cookie)
+
+			http.Redirect(w, r, "/", http.StatusMovedPermanently)
 			return
 		}
 	}
@@ -58,7 +60,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	http.Error(w, "Invalid credentials. User doesn't exist." , http.StatusUnauthorized)
+  w.Header().Add("HX-Retarget", "#error-msg")
+  w.Header().Add("HX-Reswap", "innerHTML")
+  templates.ErrorMessage("Invalid credentials.").Render(r.Context(), w)
+	// http.Error(w, "Invalid credentials." , http.StatusUnauthorized)
 	return
 
 }

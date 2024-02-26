@@ -9,7 +9,7 @@
         there are no databases created
     - [x] return tasks for logged in user
 - [x] signup user
-- [ ] tasks part 1
+- [/] tasks part 1
     - [x] add new task
         - [x] on "add new task" button, we always return
         new task form
@@ -20,23 +20,21 @@
         then save to users table
         - however it returns all of the new html
         while it should only return the new element
-- [ ] On forms, add error messages
-    - [ ] Create types with error messages
-        in templ check if they're ""
-        if no then show error message
-
-        when i change target to error message
-        then they show up
-        but then it also swaps that element
-        for home page on success
+- [x] On forms, add error messages
 - [ ] tasks part 2
-    - [ ] editing task
+    - [/] editing task
+        shows proper form
+        on saving of edit form
+        sends post to wrong path
+        change paths so they're correct
+        /task/edit for form
+        /api/task/edit for changing task in db
     - [ ] completing task
     - [ ] search task by name/descr
 
 # Frontend
-- [ ] home page
-    - [ ] number of tasks
+- [/] home page
+    - [x] number of tasks
     - [ ] top 5 recent tasks
     - [ ] sort by
         - [ ] most progressed tasks
@@ -44,22 +42,23 @@
         - [ ] oldest
         - [ ] least progresed
         - [ ] alphabetical
-    - [ ] Task
-        - [ ] id
-        - [ ] title
-        - [ ] description
+    - [/] Task
+        - [x] title
+        - [x] description
         - [ ] due date
         - [ ] created date
         - [ ] last modified
 - [x] Login/Register page
     - [x] Login/Register form
-    - [ ] tailwind styling
+    - [x] tailwind styling
 - [ ] Profile page
     - [ ] Total tasks finished
     - [ ] total tasks started
         - [ ] show as nice circle graph
+- [ ] loading cursor/spinner svg
 
 
 # Optimizations
 - [ ] switch to fasthttp
-- [ ] use echo/air
+- [x] use air
+- [ ] use echo?
