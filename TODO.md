@@ -23,8 +23,9 @@
 - [x] On forms, add error messages
 - [/] tasks part 2
     - [x] editing task
-        - [ ] ability to cancel editing
-    - [ ] completing task
+        - [x] ability to cancel editing
+    - [/] completing task
+    - [ ] remove task
     - [ ] search task by name/descr
 
 # Frontend
@@ -51,9 +52,3 @@
     - [ ] total tasks started
         - [ ] show as nice circle graph
 - [ ] loading cursor/spinner svg
-
-
-# Optimizations
-- [ ] switch to fasthttp
-- [x] use air
-- [ ] use echo?

@@ -1,0 +1,22 @@
+package templates
+
+import (
+  "todo/app/web/types"
+  "strconv"
+)
+
+templ Task(task types.Task, i int) {
+  <li class="dark:bg-slate-800 shadow-md my-2 rounded-lg mix-blend-screen" id={"task_" + strconv.Itoa(i)}>
+    <form class="flex flex-row dark:border-green-600 border-solid border-2 p-2 rounded-lg">
+      <div class="flex flex-col basis-3/4">
+        <h3 class="text-lg">Title: {task.Title}</h3>
+        <p class="font-light">Description: {task.Description}</p>
+      </div>
+      <div class="flex flex-row basis-1/4 justify-evenly items-center">
+        <input class="dark:bg-indigo-800 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + strconv.Itoa(i)} />
+        <input class="dark:bg-indigo-800 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-600 hover:cursor-pointer active:bg-indigo-900 max-h-8 h-full" type="button" value="Edit" hx-get={"/tasks/edit?id=" + task.Id + "&title=" + task.Title + "&description=" + task.Description + "&date_created=" + task.Date_created + "&date_due=" + task.Date_due} hx-target="closest form" hx-swap="innerHTML"/>
+        <input class="dark:bg-indigo-800 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-600 hover:cursor-pointer active:bg-red-900 max-h-8 h-full" type="button" value="Remove" hx-delete={"/api/tasks/remove?id=" + task.Id} />
+      </div>
+    </form>
+  </li>
+}

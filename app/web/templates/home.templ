@@ -20,19 +20,7 @@ templ HomePage(username string, tasks []types.Task) {
       if len(tasks) > 0 {
         <ul class="max-w-4xl w-full" id="tasks_list">
         for i, _ := range tasks {
-          <li class="my-2" id={"task_" + strconv.Itoa(i)}>
-            <form class="flex flex-row dark:border-green-600 border-solid border-2 p-2 rounded-lg">
-              <div class="flex flex-col basis-3/4">
-                <h3 class="text-lg">Title: {tasks[i].Title}</h3>
-                <p class="font-light">Description: {tasks[i].Description}</p>
-              </div>
-              <div class="flex flex-row basis-1/4 justify-evenly items-center">
-                <input class="dark:bg-indigo-600 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + strconv.Itoa(i)} />
-                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button" value="Edit" hx-get={"/tasks/edit?id=" + tasks[i].Id + "&title=" + tasks[i].Title + "&description=" + tasks[i].Description + "&date_created=" + tasks[i].Date_created + "&date_due=" + tasks[i].Date_due} hx-target="closest form" hx-swap="innerHTML"/>
-                <input class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-500 hover:cursor-pointer active:bg-red-700 max-h-8 h-full" type="button" value="Remove" hx-delete={"/api/tasks/remove?id=" + tasks[i].Id} />
-              </div>
-            </form>
-          </li>
+          @Task(tasks[i], i)
         }
         </ul>
       } else {

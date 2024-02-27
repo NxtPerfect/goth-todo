@@ -112,12 +112,43 @@ func EditTask(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	// Should return newly created task
-	http.Redirect(w, r, "/", http.StatusOK)
-	return
-
+  templates.Task(types.Task{Id: id, Title: title, Description: description, Finished: finished, Date_due: date_due, Date_modified: date_modified, Date_created: "1999-01-02"}, 99).Render(r.Context(), w)
 }
 
+// TODO remove current task
 func RemoveTask(w http.ResponseWriter, r *http.Request) {
-	// task_id := r.PostFormValue("id")
+  id := r.PostFormValue("id")
+
+  // TODO should check if auth token matches, to avoid deleting wrong task
+  // for that, we should get the real id from db into session or some form
+  // of cache
+	conn := database.Connect()
+	_, err := conn.Query("DELETE FROM tasks WHERE id = $1;", id)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+// After canceling edit, return the task
+func CancelEditTask(w http.ResponseWriter, r *http.Request) {
+  id := r.PostFormValue("id")
+  title := r.PostFormValue("title")
+  description := r.PostFormValue("description")
+  date_due := r.PostFormValue("date_due")
+
+  templates.Task(types.Task{Id: id, Title: title, Description: description, Finished: false, Date_due: date_due, Date_modified: time.Now().Format("2006-01-02"), Date_created: time.Now().Format("2006-01-02")}, 99).Render(r.Context(), w)
+}
+
+// TODO mark task as finished in db
+func CompleteTask(w http.ResponseWriter, r *http.Request) {
+  id := r.PostFormValue("id")
+
+  // !!TODO!! UNTESTED
+	conn := database.Connect()
+	_, err := conn.Query("UPDATE tasks SET finished = true WHERE id = $1;", id)
+
+	if err != nil {
+		panic(err)
+	}
 }

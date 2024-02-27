@@ -18,7 +18,7 @@ templ AddForm() {
 }
 
 templ EditForm(task types.Task) {
-  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/tasks/edit" hx-target="body" hx-swap="outerHTML">
+  <form class="flex flex-row gap-2 justify-center items-center max-w-4xl w-full max-h-4 h-full my-4" hx-post="/api/tasks/edit" hx-target="closest li" hx-swap="outerHTML">
     <input type="hidden" name="id" value={task.Id}/>
     <label class="min-w-fit" for="title">Title:</label>
     <input class="dark:text-white dark:bg-sky-800 min-w-0 rounded-lg py-2 px-2 max-h-6" type="text" name="title" placeholder="Title" value={task.Title} minlength="1" maxlength="32"/>
@@ -27,5 +27,6 @@ templ EditForm(task types.Task) {
     <label class="min-w-fit" for="date_due">Date due:</label>
     <input class="dark:text-white dark:bg-sky-800 hover:cursor-pointer min-w-fit py-2 px-2 max-h-6 rounded-lg text-center align-middle" type="date" value={task.Date_due} name="date_due"/>
     <button class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-20 w-full" type="submit">Confirm</button>
+    <button class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full max-w-20 w-full" type="button" hx-post="/api/tasks/edit/cancel" hx-include="closest form" hx-target="closest li" hx-swap="outerHTML">Cancel</button>
   </form>
 }
