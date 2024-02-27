@@ -13,9 +13,13 @@ templ Task(task types.Task, i int) {
         <p class="font-light">Description: {task.Description}</p>
       </div>
       <div class="flex flex-row basis-1/4 justify-evenly items-center">
-        <input class="dark:bg-indigo-800 rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + strconv.Itoa(i)} />
-        <input class="dark:bg-indigo-800 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-600 hover:cursor-pointer active:bg-indigo-900 max-h-8 h-full" type="button" value="Edit" hx-get={"/tasks/edit?id=" + task.Id + "&title=" + task.Title + "&description=" + task.Description + "&date_created=" + task.Date_created + "&date_due=" + task.Date_due} hx-target="closest form" hx-swap="innerHTML"/>
-        <input class="dark:bg-indigo-800 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-600 hover:cursor-pointer active:bg-red-900 max-h-8 h-full" type="button" value="Remove" hx-delete={"/api/tasks/remove?id=" + task.Id} />
+      if task.Finished == true {
+        <input class="dark:bg-[#3a31d8] rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + task.Id} checked/>
+      } else {
+        <input class="dark:bg-[#3a31d8] rounded-lg hover:cursor-pointer" type="checkbox" name="complete" hx-get={"/api/tasks/complete?id=" + task.Id} />
+      }
+        <input class="dark:bg-[#3a31d8] rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-600 hover:cursor-pointer active:ring-2 active:ring-[#3a31d8] max-h-8 h-full" type="button" value="Edit" hx-get={"/tasks/edit?id=" + task.Id + "&title=" + task.Title + "&description=" + task.Description + "&date_created=" + task.Date_created + "&date_due=" + task.Date_due} hx-target="closest form" hx-swap="innerHTML"/>
+        <input class="dark:bg-[#3a31d8] rounded-lg px-2 transition ease-in-out delay-100 hover:bg-red-600 hover:cursor-pointer active:ring-2 active:ring-red-600 max-h-8 h-full" type="button" value="Remove" hx-delete={"/api/tasks/remove?id=" + task.Id} hx-target="closest li" hx-swap="delete"/>
       </div>
     </form>
   </li>

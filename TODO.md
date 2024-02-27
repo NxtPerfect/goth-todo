@@ -24,8 +24,8 @@
 - [/] tasks part 2
     - [x] editing task
         - [x] ability to cancel editing
-    - [/] completing task
-    - [ ] remove task
+    - [x] completing task
+    - [x] remove task
     - [ ] search task by name/descr
 
 # Frontend

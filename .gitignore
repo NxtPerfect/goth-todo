@@ -2,3 +2,4 @@
 .env
 app/web/templates/*_templ.go
 app/postgres.backup
+static/*.jpg

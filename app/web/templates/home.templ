@@ -9,13 +9,13 @@ templ HomePage(username string, tasks []types.Task) {
   @rawPage("Home", username) {
     if username == "" {
       <h1>Welcome, guest!</h1>
-      <h2><p hx-post="/login" hx-swap="outerHTML" hx-target="body">Log in</p> to add tasks</h2>
+      <h2 class="flex flex-row dark:text-white"><p class="mx-2 text-sky-500 hover:text-sky-700 cursor-pointer" hx-post="/login" hx-swap="outerHTML" hx-target="body">Log in</p> to add tasks</h2>
     } else {
       <h1 class="text-xl font-semibold">Welcome, {username}!</h1>
       <h2 class="text-lg">Here are your tasks for today:</h2>
-      <div class="dark:bg-indigo-950 border-indigo-600 border-solid border-2 p-2 rounded-lg max-w-4xl w-full">
+      <div class="dark:bg-[#020024] border-[#3a31d8] border-solid border-2 p-2 rounded-lg max-w-4xl w-full">
       <div class="flex flex-row justify-between align-center max-w-4xl w-full">Total: { strconv.Itoa(len(tasks)) }
-        <button hx-get="/add" hx-target="#tasks_list" hx-swap="beforebegin" class="dark:bg-indigo-600 rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:bg-indigo-700 max-h-8 h-full" type="button">Add new task</button>
+        <button hx-get="/add" hx-target="#tasks_list" hx-swap="beforebegin" class="dark:bg-[#3a31d8] rounded-lg px-2 transition ease-in-out delay-100 hover:bg-indigo-500 hover:cursor-pointer active:ring-2 active:ring-[#3a31d8] max-h-8 h-full" type="button">Add new task</button>
       </div>
       if len(tasks) > 0 {
         <ul class="max-w-4xl w-full" id="tasks_list">

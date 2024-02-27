@@ -117,7 +117,7 @@ func EditTask(w http.ResponseWriter, r *http.Request) {
 
 // TODO remove current task
 func RemoveTask(w http.ResponseWriter, r *http.Request) {
-  id := r.PostFormValue("id")
+  id := r.URL.Query().Get("id")
 
   // TODO should check if auth token matches, to avoid deleting wrong task
   // for that, we should get the real id from db into session or some form
@@ -142,13 +142,18 @@ func CancelEditTask(w http.ResponseWriter, r *http.Request) {
 
 // TODO mark task as finished in db
 func CompleteTask(w http.ResponseWriter, r *http.Request) {
-  id := r.PostFormValue("id")
+  id := r.URL.Query().Get("id")
+  finished := false
+  if r.URL.Query().Get("complete") == "on" {
+    finished = true
+  }
 
   // !!TODO!! UNTESTED
 	conn := database.Connect()
-	_, err := conn.Query("UPDATE tasks SET finished = true WHERE id = $1;", id)
+	_, err := conn.Query("UPDATE tasks SET finished = $1, last_modified = $2 WHERE id = $3;",finished ,time.Now().Format("2006-01-02"), id)
 
 	if err != nil {
 		panic(err)
 	}
+  http.Error(w, "Got it", http.StatusOK)
 }
