@@ -10,10 +10,10 @@ simple go and htmx todo website
 - remove task
 
 # Showcase
-![](2024-02-27_15-07.jpg)
-![](2024-02-27_15-03.jpg)
-![](2024-02-27_15-05.jpg)
-![](2024-02-27_15-06.jpg)
+![](preview/2024-02-27_15-07.jpg)
+![](preview/2024-02-27_15-03.jpg)
+![](preview/2024-02-27_15-05.jpg)
+![](preview/2024-02-27_15-06.jpg)
 
 # Usage
 setup environment variables in `.env` file inside of the root folder
